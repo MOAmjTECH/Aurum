@@ -206,4 +206,5 @@ function clearSession() {
    ============================================================ */
 function isValidEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  console.log("JS connected");
 }
