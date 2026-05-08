@@ -4,1071 +4,419 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Aurum Finance</title>
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-
   <style>
     :root {
-      --cream:        #faf7f2;
-      --parchment:    #f2ece0;
-      --warm-white:   #ffffff;
-      --gold:         #c9a84c;
-      --gold-light:   #e8d5a3;
-      --gold-pale:    #f5edda;
-      --charcoal:     #2c2c2c;
-      --smoke:        #6b6460;
-      --ash:          #9b948f;
-      --border:       #e8e0d5;
-
-      --income-mid:   #52b788;
-      --income-deep:  #2d6a4f;
-      --income-pale:  #d8f3e8;
-
-      --expense-mid:  #e63946;
-      --expense-deep: #9b2226;
-      --expense-pale: #fde8ea;
-
-      --shadow-soft:  0 4px 24px rgba(44, 36, 20, 0.07);
-      --shadow-card:  0 8px 40px rgba(44, 36, 20, 0.13);
-
-      --radius-sm:    10px;
-      --radius-md:    18px;
-      --radius-lg:    28px;
-
-      --transition:   0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Montserrat', sans-serif;
-      background-color: var(--cream);
-      background-image:
-        radial-gradient(ellipse at 15% 10%, rgba(201,168,76,0.10) 0%, transparent 55%),
-        radial-gradient(ellipse at 85% 90%, rgba(82,183,136,0.08) 0%, transparent 55%);
-      min-height: 100vh;
-      color: var(--charcoal);
-      padding: 30px 20px;
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    .container {
-      max-width: 620px;
-      margin: 0 auto;
-    }
-
-    /* =========================
-       SIGN IN
-    ========================= */
-
-    .signin-wrap {
-      width: 100%;
-      max-width: 420px;
-      margin: auto;
-      animation: fadeUp 0.7s ease both;
-    }
-
-    .signin-header,
-    .header {
-      text-align: center;
-      margin-bottom: 36px;
-    }
-
-    .signin-header__eyebrow,
-    .header__eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 14px;
-    }
-
-    .signin-header__eyebrow::before,
-    .signin-header__eyebrow::after,
-    .header__eyebrow::before,
-    .header__eyebrow::after {
-      content: '';
-      width: 28px;
-      height: 1px;
-      background: var(--gold-light);
-    }
-
-    .signin-header__title,
-    .header__title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(42px, 10vw, 58px);
-      font-weight: 300;
-      line-height: 1;
-      letter-spacing: 0.06em;
-    }
-
-    .signin-header__title span,
-    .header__title span {
-      color: var(--gold);
-      font-style: italic;
-    }
-
-    .signin-header__sub,
-    .header__sub {
-      margin-top: 8px;
-      font-size: 11px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--ash);
-    }
-
-    .signin-header__line,
-    .header__line {
-      width: 48px;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
-      margin: 16px auto 0;
-    }
-
-    .signin-card,
-    .form-card,
-    .transactions-card,
-    .categories-card,
-    .budget-card,
-    .overview-tile {
-      background: var(--warm-white);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      box-shadow: var(--shadow-soft);
-    }
-
-    .signin-card {
-      padding: 36px;
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-card);
-    }
-
-    .section-label {
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 18px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .section-label::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
-
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      margin-bottom: 16px;
-    }
-
-    .form-group label {
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--ash);
-    }
-
-    .form-control {
-      width: 100%;
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 12px 14px;
-      background: var(--cream);
-      font-family: inherit;
-      outline: none;
-      transition: 0.3s;
-    }
-
-    .form-control:focus {
-      border-color: var(--gold);
-      box-shadow: 0 0 0 3px rgba(201,168,76,0.10);
-      background: white;
-    }
-
-    .input-wrap {
-      position: relative;
-    }
-
-    .input-wrap .form-control {
-      padding-right: 44px;
-    }
-
-    .toggle-pw {
-      position: absolute;
-      right: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      border: none;
-      background: none;
-      cursor: pointer;
-      font-size: 15px;
-    }
-
-    .forgot-row {
-      display: flex;
-      justify-content: flex-end;
-      margin-bottom: 22px;
-    }
-
-    .forgot-link {
-      font-size: 10px;
-      color: var(--ash);
-      text-decoration: none;
-    }
-
-    .btn-signin,
-    .btn-add {
-      width: 100%;
-      border: none;
-      border-radius: var(--radius-sm);
-      background: var(--charcoal);
-      color: white;
-      padding: 14px;
-      cursor: pointer;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      transition: 0.3s;
-    }
-
-    .btn-signin:hover,
-    .btn-add:hover {
-      background: black;
-      transform: translateY(-1px);
-    }
-
-    .error-msg {
-      display: none;
-      background: rgba(230,57,70,0.08);
-      border: 1px solid rgba(230,57,70,0.2);
-      border-radius: var(--radius-sm);
-      padding: 10px 14px;
-      font-size: 11px;
-      color: #9b2226;
-      margin-bottom: 16px;
-      text-align: center;
-    }
-
-    .error-msg.visible {
-      display: block;
-    }
-
-    .divider {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin: 24px 0;
-    }
-
-    .divider::before,
-    .divider::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
-
-    .divider span {
-      font-size: 9px;
-      color: var(--ash);
-      text-transform: uppercase;
-    }
-
-    .social-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    .btn-social {
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 11px 14px;
-      background: var(--cream);
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .btn-social:hover {
-      border-color: var(--gold);
-      background: var(--gold-pale);
-    }
-
-    .signin-footer,
-    .footer {
-      text-align: center;
-      margin-top: 26px;
-      font-size: 11px;
-      color: var(--ash);
-    }
-
-    .signin-footer a {
-      color: var(--gold);
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    .demo-hint {
-      text-align: center;
-      margin-top: 18px;
-      font-size: 10px;
-      color: var(--ash);
-      background: var(--gold-pale);
-      border: 1px dashed var(--gold-light);
-      border-radius: var(--radius-sm);
-      padding: 9px 14px;
-    }
-
-    /* =========================
-       TRACKER
-    ========================= */
-
-    .top-nav {
-      display: flex;
-      justify-content: flex-end;
-      margin-bottom: 16px;
-    }
-
-    .btn-signout {
-      border: 1px solid var(--border);
-      border-radius: 99px;
-      padding: 8px 14px;
-      text-decoration: none;
-      color: var(--ash);
-      font-size: 10px;
-      transition: 0.3s;
-    }
-
-    .btn-signout:hover {
-      background: var(--parchment);
-      color: var(--charcoal);
-    }
-
-    .balance-card {
-      background: var(--charcoal);
-      border-radius: var(--radius-lg);
-      padding: 36px;
-      color: white;
-      margin-bottom: 24px;
-      box-shadow: var(--shadow-card);
-    }
-
-    .balance-label {
-      font-size: 10px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--ash);
-      margin-bottom: 6px;
-    }
-
-    .balance-month {
-      color: var(--gold);
-      font-size: 9px;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-
-    .balance-amount {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 56px;
-      font-weight: 300;
-    }
-
-    .balance-divider {
-      width: 100%;
-      height: 1px;
-      background: rgba(255,255,255,0.1);
-      margin: 20px 0;
-    }
-
-    .balance-stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-
-    .stat__value {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 22px;
-    }
-
-    .dashboard {
-      margin-bottom: 22px;
-    }
-
-    .budget-card {
-      padding: 22px;
-      margin-bottom: 14px;
-    }
-
-    .progress-track {
-      width: 100%;
-      height: 6px;
-      background: var(--parchment);
-      border-radius: 99px;
-      overflow: hidden;
-      margin: 12px 0;
-    }
-
-    .progress-fill {
-      width: 34%;
-      height: 100%;
-      background: linear-gradient(90deg, var(--income-mid), var(--gold));
-    }
-
-    .overview-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-    }
-
-    .overview-tile {
-      padding: 16px;
-      text-align: center;
-    }
-
-    .overview-tile__value {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 24px;
-      margin: 5px 0;
-    }
-
-    .categories-card {
-      padding: 24px;
-      margin-bottom: 22px;
-    }
-
-    .cat-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .cat-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .cat-dot {
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-    }
-
-    .cat-bar-track {
-      flex: 1;
-      height: 5px;
-      background: var(--parchment);
-      border-radius: 99px;
-      overflow: hidden;
-    }
-
-    .cat-bar-fill {
-      height: 100%;
-    }
-
-    .form-card {
-      padding: 28px;
-      margin-bottom: 22px;
-    }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 13px;
-      margin-bottom: 13px;
-    }
-
-    .form-group--full {
-      grid-column: 1 / -1;
-    }
-
-    .transactions-card {
-      overflow: hidden;
-    }
-
-    .transactions-header {
-      padding: 22px 24px 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .filter-tabs {
-      display: flex;
-      gap: 6px;
-    }
-
-    .filter-tab {
-      border: 1px solid var(--border);
-      border-radius: 99px;
-      padding: 5px 11px;
-      background: transparent;
-      cursor: pointer;
-      font-size: 9px;
-    }
-
-    .filter-tab.active {
-      background: var(--charcoal);
-      color: white;
-    }
-
-    .transactions-list {
-      padding: 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .txn {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 13px 14px;
-      border-radius: var(--radius-sm);
-    }
-
-    .txn--income {
-      background: var(--income-pale);
-    }
-
-    .txn--expense {
-      background: var(--expense-pale);
-    }
-
-    .txn__dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-    }
-
-    .txn--income .txn__dot {
-      background: var(--income-mid);
-    }
-
-    .txn--expense .txn__dot {
-      background: var(--expense-mid);
-    }
-
-    .txn__info {
-      flex: 1;
-    }
-
-    .txn__desc {
-      font-size: 13px;
-      font-weight: 500;
-    }
-
-    .txn__meta {
-      margin-top: 3px;
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .txn__badge {
-      padding: 2px 7px;
-      border-radius: 99px;
-      font-size: 9px;
-      text-transform: uppercase;
-    }
-
-    .badge--salary {
-      background: rgba(82,183,136,0.15);
-      color: #2d6a4f;
-    }
-
-    .badge--freelance {
-      background: rgba(201,168,76,0.15);
-      color: #8a6a1f;
-    }
-
-    .badge--shopping {
-      background: rgba(156,111,181,0.15);
-      color: #7a4a9e;
-    }
-
-    .badge--utilities {
-      background: rgba(224,140,58,0.15);
-      color: #b5651d;
-    }
-
-    .badge--food {
-      background: rgba(224,122,95,0.15);
-      color: #c05a40;
-    }
-
-    .badge--transport {
-      background: rgba(61,126,190,0.15);
-      color: #2a5f9a;
-    }
-
-    .badge--other {
-      background: rgba(155,148,143,0.15);
-      color: #6b6460;
-    }
-
-    .txn__amount {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 20px;
-    }
-
-    @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(24px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @media (max-width: 540px) {
-      .form-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .overview-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .social-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .transactions-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-      }
+      --cream:#faf7f2;--parchment:#f2ece0;--warm-white:#ffffff;
+      --gold:#c9a84c;--gold-light:#e8d5a3;--gold-pale:#f5edda;
+      --charcoal:#2c2c2c;--smoke:#6b6460;--ash:#9b948f;--border:#e8e0d5;
+      --income-mid:#52b788;--income-deep:#2d6a4f;--income-pale:#d8f3e8;
+      --expense-mid:#e63946;--expense-deep:#9b2226;--expense-pale:#fde8ea;
+      --shadow-soft:0 4px 24px rgba(44,36,20,0.07);
+      --shadow-card:0 8px 40px rgba(44,36,20,0.13);
+      --radius-sm:10px;--radius-md:18px;--radius-lg:28px;
+      --transition:0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'Montserrat',sans-serif;background-color:var(--cream);
+      background-image:radial-gradient(ellipse at 15% 10%,rgba(201,168,76,0.10) 0%,transparent 55%),
+      radial-gradient(ellipse at 85% 90%,rgba(82,183,136,0.08) 0%,transparent 55%);
+      min-height:100vh;color:var(--charcoal);padding:30px 20px;}
+    .hidden{display:none!important;}
+
+    /* ── Auth wrapper (signin + register centered) ── */
+    .auth-wrap{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - 60px);}
+    .auth-inner{width:100%;max-width:420px;animation:fadeUp 0.7s ease both;}
+
+    /* ── Tracker wrapper ── */
+    .container{max-width:620px;margin:0 auto;}
+
+    /* ── Shared header ── */
+    .page-header{text-align:center;margin-bottom:36px;}
+    .eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:10px;font-weight:600;
+      letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;}
+    .eyebrow::before,.eyebrow::after{content:'';width:28px;height:1px;background:var(--gold-light);}
+    .page-header h1{font-family:'Cormorant Garamond',serif;font-size:clamp(42px,10vw,58px);
+      font-weight:300;line-height:1;letter-spacing:0.06em;}
+    .page-header h1 span{color:var(--gold);font-style:italic;}
+    .page-header .sub{margin-top:8px;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ash);}
+    .hline{width:48px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:16px auto 0;}
+
+    /* ── Cards ── */
+    .card{background:var(--warm-white);border:1px solid var(--border);
+      border-radius:var(--radius-md);box-shadow:var(--shadow-soft);}
+    .auth-card{background:var(--warm-white);border:1px solid var(--border);
+      border-radius:var(--radius-lg);padding:36px;box-shadow:var(--shadow-card);}
+
+    /* ── Section label ── */
+    .section-label{font-size:9px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;
+      color:var(--gold);margin-bottom:18px;display:flex;align-items:center;gap:10px;}
+    .section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+
+    /* ── Forms ── */
+    .form-group{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
+    .form-group label{font-size:9px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--ash);}
+    .form-control{width:100%;border:1.5px solid var(--border);border-radius:var(--radius-sm);
+      padding:12px 14px;background:var(--cream);font-family:inherit;outline:none;
+      transition:0.3s;font-size:13px;}
+    .form-control:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,0.10);background:white;}
+    .input-wrap{position:relative;}
+    .input-wrap .form-control{padding-right:44px;}
+    .toggle-pw{position:absolute;right:12px;top:50%;transform:translateY(-50%);
+      border:none;background:none;cursor:pointer;font-size:15px;}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-bottom:13px;}
+    .form-group--full{grid-column:1/-1;}
+    select.form-control{cursor:pointer;}
+
+    /* ── Buttons ── */
+    .btn-primary{width:100%;border:none;border-radius:var(--radius-sm);background:var(--charcoal);
+      color:white;padding:14px;cursor:pointer;font-size:11px;font-weight:600;
+      letter-spacing:0.18em;text-transform:uppercase;transition:0.3s;font-family:inherit;}
+    .btn-primary:hover{background:black;transform:translateY(-1px);}
+    .btn-primary:disabled{opacity:0.6;cursor:not-allowed;transform:none;}
+
+    /* ── Messages ── */
+    .error-msg{display:none;background:rgba(230,57,70,0.08);border:1px solid rgba(230,57,70,0.2);
+      border-radius:var(--radius-sm);padding:10px 14px;font-size:11px;color:#9b2226;
+      margin-bottom:16px;text-align:center;}
+    .error-msg.visible{display:block;}
+
+    /* ── Divider ── */
+    .divider{display:flex;align-items:center;gap:12px;margin:24px 0;}
+    .divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border);}
+    .divider span{font-size:9px;color:var(--ash);text-transform:uppercase;}
+    .social-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+    .btn-social{border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:11px 14px;
+      background:var(--cream);cursor:pointer;transition:0.3s;font-family:inherit;font-size:12px;}
+    .btn-social:hover{border-color:var(--gold);background:var(--gold-pale);}
+
+    /* ── Footer note ── */
+    .footer-note{text-align:center;margin-top:26px;font-size:11px;color:var(--ash);}
+    .footer-note a{color:var(--gold);text-decoration:none;font-weight:600;}
+    .demo-hint{text-align:center;margin-top:18px;font-size:10px;color:var(--ash);
+      background:var(--gold-pale);border:1px dashed var(--gold-light);
+      border-radius:var(--radius-sm);padding:9px 14px;}
+    .forgot-row{display:flex;justify-content:flex-end;margin-bottom:22px;}
+    .forgot-link{font-size:10px;color:var(--ash);text-decoration:none;}
+
+    /* ── Top nav ── */
+    .top-nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
+    .btn-signout{border:1px solid var(--border);border-radius:99px;padding:8px 14px;
+      text-decoration:none;color:var(--ash);font-size:10px;transition:0.3s;}
+    .btn-signout:hover{background:var(--parchment);color:var(--charcoal);}
+
+    /* ── Balance card ── */
+    .balance-card{background:var(--charcoal);border-radius:var(--radius-lg);padding:36px;
+      color:white;margin-bottom:24px;box-shadow:var(--shadow-card);}
+    .balance-label{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ash);margin-bottom:6px;}
+    .balance-month{color:var(--gold);font-size:9px;text-transform:uppercase;margin-bottom:8px;}
+    .balance-amount{font-family:'Cormorant Garamond',serif;font-size:56px;font-weight:300;}
+    .balance-divider{width:100%;height:1px;background:rgba(255,255,255,0.1);margin:20px 0;}
+    .balance-stats{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+    .stat__value{font-family:'Cormorant Garamond',serif;font-size:22px;}
+
+    /* ── Dashboard ── */
+    .dashboard{margin-bottom:22px;}
+    .budget-card{padding:22px;margin-bottom:14px;background:var(--warm-white);
+      border:1px solid var(--border);border-radius:var(--radius-md);box-shadow:var(--shadow-soft);}
+    .progress-track{width:100%;height:6px;background:var(--parchment);border-radius:99px;overflow:hidden;margin:12px 0;}
+    .progress-fill{height:100%;background:linear-gradient(90deg,var(--income-mid),var(--gold));
+      border-radius:99px;transition:width 0.6s ease;}
+    .overview-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+    .overview-tile{padding:16px;text-align:center;background:var(--warm-white);
+      border:1px solid var(--border);border-radius:var(--radius-md);box-shadow:var(--shadow-soft);}
+    .overview-tile__value{font-family:'Cormorant Garamond',serif;font-size:24px;margin:5px 0;}
+
+    /* ── Categories ── */
+    .categories-card{padding:24px;margin-bottom:22px;background:var(--warm-white);
+      border:1px solid var(--border);border-radius:var(--radius-md);box-shadow:var(--shadow-soft);}
+    .cat-list{display:flex;flex-direction:column;gap:10px;}
+    .cat-row{display:flex;align-items:center;gap:12px;}
+    .cat-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+    .cat-name{font-size:12px;min-width:70px;}
+    .cat-bar-track{flex:1;height:5px;background:var(--parchment);border-radius:99px;overflow:hidden;}
+    .cat-bar-fill{height:100%;border-radius:99px;transition:width 0.6s ease;}
+    .cat-amount{font-size:11px;min-width:70px;text-align:right;color:var(--smoke);}
+
+    /* ── Add transaction form ── */
+    .form-card{padding:28px;margin-bottom:22px;background:var(--warm-white);
+      border:1px solid var(--border);border-radius:var(--radius-md);box-shadow:var(--shadow-soft);}
+
+    /* ── Transactions ── */
+    .transactions-card{overflow:hidden;background:var(--warm-white);
+      border:1px solid var(--border);border-radius:var(--radius-md);box-shadow:var(--shadow-soft);}
+    .transactions-header{padding:22px 24px 0;display:flex;justify-content:space-between;align-items:center;}
+    .filter-tabs{display:flex;gap:6px;}
+    .filter-tab{border:1px solid var(--border);border-radius:99px;padding:5px 11px;
+      background:transparent;cursor:pointer;font-size:9px;font-family:inherit;transition:0.2s;}
+    .filter-tab.active{background:var(--charcoal);color:white;border-color:var(--charcoal);}
+    .transactions-list{padding:14px;display:flex;flex-direction:column;gap:8px;}
+    .txn{display:flex;align-items:center;gap:12px;padding:13px 14px;border-radius:var(--radius-sm);}
+    .txn--income{background:var(--income-pale);}
+    .txn--expense{background:var(--expense-pale);}
+    .txn__dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+    .txn--income .txn__dot{background:var(--income-mid);}
+    .txn--expense .txn__dot{background:var(--expense-mid);}
+    .txn__info{flex:1;}
+    .txn__desc{font-size:13px;font-weight:500;}
+    .txn__meta{margin-top:3px;display:flex;gap:8px;align-items:center;}
+    .txn__badge{padding:2px 7px;border-radius:99px;font-size:9px;text-transform:uppercase;}
+    .badge--salary{background:rgba(82,183,136,0.15);color:#2d6a4f;}
+    .badge--freelance{background:rgba(201,168,76,0.15);color:#8a6a1f;}
+    .badge--shopping{background:rgba(156,111,181,0.15);color:#7a4a9e;}
+    .badge--utilities{background:rgba(224,140,58,0.15);color:#b5651d;}
+    .badge--food{background:rgba(224,122,95,0.15);color:#c05a40;}
+    .badge--transport{background:rgba(61,126,190,0.15);color:#2a5f9a;}
+    .badge--other{background:rgba(155,148,143,0.15);color:#6b6460;}
+    .txn__amount{font-family:'Cormorant Garamond',serif;font-size:20px;white-space:nowrap;}
+    .txn__delete{border:none;background:none;cursor:pointer;font-size:14px;opacity:0.4;
+      transition:0.2s;padding:4px;}
+    .txn__delete:hover{opacity:1;}
+    .empty-state{text-align:center;padding:32px;color:var(--ash);font-size:12px;}
+
+    /* ── Footer ── */
+    .page-footer{text-align:center;margin-top:32px;font-size:11px;color:var(--ash);}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+
+    @media(max-width:540px){
+      .form-grid{grid-template-columns:1fr;}
+      .overview-grid{grid-template-columns:1fr 1fr;}
+      .social-grid{grid-template-columns:1fr;}
+      .transactions-header{flex-direction:column;align-items:flex-start;gap:10px;}
     }
   </style>
 </head>
 <body>
 
-  <!-- =========================
-       SIGN IN PAGE
-  ========================== -->
-
-  <div class="signin-wrap" id="signinPage">
-
-    <header class="signin-header">
-      <div class="signin-header__eyebrow">Aurum Finance</div>
-
-      <h1 class="signin-header__title">
-        Wel<span>come</span>
-      </h1>
-
-      <p class="signin-header__sub">
-        Sign in to your account
-      </p>
-
-      <div class="signin-header__line"></div>
-    </header>
-
-    <div class="signin-card">
-
-      <p class="section-label">Credentials</p>
-
-      <div class="error-msg" id="errorMsg">
-        Invalid email or password.
-      </div>
-
-      <div class="form-group">
-        <label>Email Address</label>
-
-        <input
-          type="email"
-          id="email"
-          class="form-control"
-          placeholder="you@example.com"
-        />
-      </div>
-
-      <div class="form-group">
-        <label>Password</label>
-
-        <div class="input-wrap">
-          <input
-            type="password"
-            id="password"
-            class="form-control"
-            placeholder="••••••••"
-          />
-
-          <button class="toggle-pw" id="togglePw">
-            👁
-          </button>
-        </div>
-      </div>
-
-      <div class="forgot-row">
-        <a href="#" class="forgot-link">
-          Forgot password?
-        </a>
-      </div>
-
-      <button class="btn-signin" id="signinBtn">
-        Sign In
-      </button>
-
-      <div class="divider">
-        <span>or continue with</span>
-      </div>
-
-      <div class="social-grid">
-        <button class="btn-social">Google</button>
-        <button class="btn-social">Apple</button>
-      </div>
-
-    </div>
-
-    <div class="demo-hint">
-      Demo: use any email & password
-      <strong>test123</strong>
-    </div>
-
-    <p class="signin-footer">
-      Don't have an account?
-      <a href="#">Create one →</a>
-    </p>
-
-  </div>
-
-  <!-- =========================
-       TRACKER PAGE
-  ========================== -->
-
-  <div class="container hidden" id="trackerPage">
-
-    <nav class="top-nav">
-      <a href="#" class="btn-signout" id="signoutBtn">
-        ⎋ Sign Out
-      </a>
-    </nav>
-
-    <header class="header">
-      <div class="header__eyebrow">Aurum Finance</div>
-
-      <h1 class="header__title">
-        Expense <span>Tracker</span>
-      </h1>
-
-      <p class="header__sub">
-        Your personal finance overview
-      </p>
-
-      <div class="header__line"></div>
-    </header>
-
-    <div class="balance-card">
-      <p class="balance-label">Total Balance</p>
-      <p class="balance-month">April 2025</p>
-
-      <div class="balance-amount">
-        R14,250.00
-      </div>
-
-      <div class="balance-divider"></div>
-
-      <div class="balance-stats">
-
-        <div>
-          <p class="balance-label">Income</p>
-          <p class="stat__value">R 21,500.00</p>
-        </div>
-
-        <div>
-          <p class="balance-label">Expenses</p>
-          <p class="stat__value">R 7,250.00</p>
-        </div>
-
-      </div>
-    </div>
-
-    <div class="dashboard">
-
-      <p class="section-label">Overview</p>
-
-      <div class="budget-card">
-
-        <div style="display:flex;justify-content:space-between;">
-          <span>Monthly Spending</span>
-          <span><strong>R 7,250</strong> of R 21,500</span>
-        </div>
-
-        <div class="progress-track">
-          <div class="progress-fill"></div>
-        </div>
-
-        <p style="font-size:10px;color:var(--ash);">
-          You have spent 34% of your total income this month.
-        </p>
-
-      </div>
-
-      <div class="overview-grid">
-
-        <div class="overview-tile">
-          <div>🧾</div>
-          <div class="overview-tile__value">8</div>
-          <div>Transactions</div>
-        </div>
-
-        <div class="overview-tile">
-          <div>📅</div>
-          <div class="overview-tile__value">Apr</div>
-          <div>Current Month</div>
-        </div>
-
-        <div class="overview-tile">
-          <div>💸</div>
-          <div class="overview-tile__value">R 906</div>
-          <div>Avg. Expense</div>
-        </div>
-
-      </div>
-
-    </div>
-
-    <!-- Categories -->
-    <div class="categories-card">
-
-      <p class="section-label">Categories</p>
-
-      <div class="cat-list">
-
-        <div class="cat-row">
-          <span class="cat-dot" style="background:#52b788;"></span>
-          <span>Salary</span>
-
-          <div class="cat-bar-track">
-            <div class="cat-bar-fill" style="width:70%;background:#52b788;"></div>
-          </div>
-
-          <span>R 15,000</span>
-        </div>
-
-        <div class="cat-row">
-          <span class="cat-dot" style="background:#e07a5f;"></span>
-          <span>Food</span>
-
-          <div class="cat-bar-track">
-            <div class="cat-bar-fill" style="width:18%;background:#e07a5f;"></div>
-          </div>
-
-          <span>R 1,320</span>
-        </div>
-
-      </div>
-
-    </div>
-
-    <!-- Form -->
-    <div class="form-card">
-
-      <p class="section-label">New Transaction</p>
-
-      <div class="form-grid">
-
-        <div class="form-group form-group--full">
-          <label>Description</label>
-
-          <input
-            type="text"
-            class="form-control"
-            placeholder="e.g. Grocery run"
-          />
+  <!-- ════════════════════════════
+       SIGN IN VIEW
+  ════════════════════════════ -->
+  <div id="viewSignin" class="auth-wrap">
+    <div class="auth-inner">
+      <header class="page-header">
+        <div class="eyebrow">Aurum Finance</div>
+        <h1>Wel<span>come</span></h1>
+        <p class="sub">Sign in to your account</p>
+        <div class="hline"></div>
+      </header>
+
+      <div class="auth-card" id="signinCard">
+        <p class="section-label">Credentials</p>
+        <div class="error-msg" id="signinError"></div>
+
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="siEmail" class="form-control" placeholder="you@example.com"/>
         </div>
 
         <div class="form-group">
-          <label>Amount</label>
-
-          <input
-            type="number"
-            class="form-control"
-            placeholder="0.00"
-          />
+          <label>Password</label>
+          <div class="input-wrap">
+            <input type="password" id="siPassword" class="form-control" placeholder="••••••••"/>
+            <button class="toggle-pw" data-target="siPassword">👁</button>
+          </div>
         </div>
 
-        <div class="form-group">
-          <label>Date</label>
+        <div class="forgot-row"><a href="#" class="forgot-link">Forgot password?</a></div>
+        <button class="btn-primary" id="signinBtn">Sign In</button>
 
-          <input
-            type="date"
-            class="form-control"
-          />
+        <div class="divider"><span>or continue with</span></div>
+        <div class="social-grid">
+          <button class="btn-social">Google</button>
+          <button class="btn-social">Apple</button>
         </div>
-
       </div>
 
-      <button class="btn-add">
-        + Add Transaction
-      </button>
-
+      <p class="footer-note">
+        Don't have an account? <a href="#" id="goToRegister">Create one →</a>
+      </p>
     </div>
-
-    <!-- Transactions -->
-    <div class="transactions-card">
-
-      <div class="transactions-header">
-
-        <p class="section-label">
-          Transaction History
-        </p>
-
-        <div class="filter-tabs">
-          <button class="filter-tab active">All</button>
-          <button class="filter-tab">Income</button>
-          <button class="filter-tab">Expenses</button>
-        </div>
-
-      </div>
-
-      <div class="transactions-list">
-
-        <div class="txn txn--income">
-          <span class="txn__dot"></span>
-
-          <div class="txn__info">
-            <p class="txn__desc">Monthly Salary</p>
-
-            <div class="txn__meta">
-              <span class="txn__badge badge--salary">Salary</span>
-              <span>27 Apr 2025</span>
-            </div>
-          </div>
-
-          <div class="txn__amount">
-            +R 15,000.00
-          </div>
-        </div>
-
-        <div class="txn txn--expense">
-          <span class="txn__dot"></span>
-
-          <div class="txn__info">
-            <p class="txn__desc">Grocery Shopping</p>
-
-            <div class="txn__meta">
-              <span class="txn__badge badge--food">Food</span>
-              <span>20 Apr 2025</span>
-            </div>
-          </div>
-
-          <div class="txn__amount">
-            −R 1,320.00
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-
-    <footer class="footer">
-      Crafted with care · <span>Aurum</span> · 2025
-    </footer>
-
   </div>
 
-  <script>
-    // Password toggle
-    const togglePw = document.getElementById('togglePw');
-    const pwInput = document.getElementById('password');
+  <!-- ════════════════════════════
+       REGISTER VIEW
+  ════════════════════════════ -->
+  <div id="viewRegister" class="auth-wrap hidden">
+    <div class="auth-inner">
+      <header class="page-header">
+        <div class="eyebrow">Aurum Finance</div>
+        <h1>Cre<span>ate</span></h1>
+        <p class="sub">Set up your account</p>
+        <div class="hline"></div>
+      </header>
 
-    togglePw.addEventListener('click', () => {
-      const hidden = pwInput.type === 'password';
+      <div class="auth-card" id="registerCard">
+        <p class="section-label">New Account</p>
+        <div class="error-msg" id="registerError"></div>
 
-      pwInput.type = hidden ? 'text' : 'password';
-      togglePw.textContent = hidden ? '🙈' : '👁';
-    });
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="regName" class="form-control" placeholder="Jane Doe"/>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="regEmail" class="form-control" placeholder="you@example.com"/>
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <div class="input-wrap">
+            <input type="password" id="regPassword" class="form-control" placeholder="Min. 6 characters"/>
+            <button class="toggle-pw" data-target="regPassword">👁</button>
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:22px;">
+          <label>Confirm Password</label>
+          <div class="input-wrap">
+            <input type="password" id="regConfirm" class="form-control" placeholder="Repeat password"/>
+            <button class="toggle-pw" data-target="regConfirm">👁</button>
+          </div>
+        </div>
 
-    // Pages
-    const signinPage = document.getElementById('signinPage');
-    const trackerPage = document.getElementById('trackerPage');
+        <button class="btn-primary" id="registerBtn">Create Account</button>
+      </div>
 
-    // Buttons
-    const signinBtn = document.getElementById('signinBtn');
-    const signoutBtn = document.getElementById('signoutBtn');
+      <p class="footer-note">
+        Already have an account? <a href="#" id="goToSignin">Sign in →</a>
+      </p>
+    </div>
+  </div>
 
-    // Error
-    const errorMsg = document.getElementById('errorMsg');
+  <!-- ════════════════════════════
+       TRACKER VIEW
+  ════════════════════════════ -->
+  <div id="viewTracker" class="hidden">
+    <div class="container">
 
-    // Sign in
-    signinBtn.addEventListener('click', () => {
+      <nav class="top-nav">
+        <span id="userGreeting" style="font-size:11px;color:var(--ash);letter-spacing:0.1em;"></span>
+        <a href="#" class="btn-signout" id="signoutBtn">⎋ Sign Out</a>
+      </nav>
 
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value;
+      <header class="page-header">
+        <div class="eyebrow">Aurum Finance</div>
+        <h1>Expense <span>Tracker</span></h1>
+        <p class="sub">Your personal finance overview</p>
+        <div class="hline"></div>
+      </header>
 
-      errorMsg.classList.remove('visible');
+      <!-- Balance -->
+      <div class="balance-card">
+        <p class="balance-label">Total Balance</p>
+        <p class="balance-month" id="balanceMonth"></p>
+        <div class="balance-amount" id="balanceAmount">R 0.00</div>
+        <div class="balance-divider"></div>
+        <div class="balance-stats">
+          <div>
+            <p class="balance-label">Income</p>
+            <p class="stat__value" id="totalIncome">R 0.00</p>
+          </div>
+          <div>
+            <p class="balance-label">Expenses</p>
+            <p class="stat__value" id="totalExpenses">R 0.00</p>
+          </div>
+        </div>
+      </div>
 
-      if (!email || !password) {
-        errorMsg.textContent =
-          'Please enter your email and password.';
+      <!-- Overview -->
+      <div class="dashboard">
+        <p class="section-label">Overview</p>
+        <div class="budget-card">
+          <div style="display:flex;justify-content:space-between;">
+            <span style="font-size:13px;">Monthly Spending</span>
+            <span style="font-size:12px;"><strong id="spendLabel">R 0</strong> of <span id="incomeLabel">R 0</span></span>
+          </div>
+          <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%;"></div></div>
+          <p style="font-size:10px;color:var(--ash);" id="progressText">You have spent 0% of your total income this month.</p>
+        </div>
+        <div class="overview-grid">
+          <div class="overview-tile">
+            <div>🧾</div>
+            <div class="overview-tile__value" id="txnCount">0</div>
+            <div style="font-size:10px;color:var(--ash);">Transactions</div>
+          </div>
+          <div class="overview-tile">
+            <div>📅</div>
+            <div class="overview-tile__value" id="currentMonth">—</div>
+            <div style="font-size:10px;color:var(--ash);">Current Month</div>
+          </div>
+          <div class="overview-tile">
+            <div>💸</div>
+            <div class="overview-tile__value" id="avgExpense">R 0</div>
+            <div style="font-size:10px;color:var(--ash);">Avg. Expense</div>
+          </div>
+        </div>
+      </div>
 
-        errorMsg.classList.add('visible');
-        return;
-      }
+      <!-- Categories -->
+      <div class="categories-card">
+        <p class="section-label">Categories</p>
+        <div class="cat-list" id="catList">
+          <p class="empty-state" style="padding:8px;">No transactions yet.</p>
+        </div>
+      </div>
 
-      if (password !== 'test123') {
-        errorMsg.textContent =
-          'Invalid email or password.';
+      <!-- Add Transaction Form -->
+      <div class="form-card">
+        <p class="section-label">New Transaction</p>
+        <div class="error-msg" id="txnError"></div>
+        <div class="form-grid">
+          <div class="form-group form-group--full">
+            <label>Description</label>
+            <input type="text" id="txnDesc" class="form-control" placeholder="e.g. Grocery run"/>
+          </div>
+          <div class="form-group">
+            <label>Amount (R)</label>
+            <input type="number" id="txnAmount" class="form-control" placeholder="0.00" min="0" step="0.01"/>
+          </div>
+          <div class="form-group">
+            <label>Date</label>
+            <input type="date" id="txnDate" class="form-control"/>
+          </div>
+          <div class="form-group">
+            <label>Type</label>
+            <select id="txnType" class="form-control">
+              <option value="income">Income</option>
+              <option value="expense" selected>Expense</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Category</label>
+            <select id="txnCategory" class="form-control">
+              <option value="salary">Salary</option>
+              <option value="freelance">Freelance</option>
+              <option value="food">Food</option>
+              <option value="shopping">Shopping</option>
+              <option value="transport">Transport</option>
+              <option value="utilities">Utilities</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+        <button class="btn-primary" id="addTxnBtn">+ Add Transaction</button>
+      </div>
 
-        errorMsg.classList.add('visible');
-        return;
-      }
+      <!-- Transaction History -->
+      <div class="transactions-card">
+        <div class="transactions-header">
+          <p class="section-label" style="margin-bottom:0;">Transaction History</p>
+          <div class="filter-tabs">
+            <button class="filter-tab active" data-filter="all">All</button>
+            <button class="filter-tab" data-filter="income">Income</button>
+            <button class="filter-tab" data-filter="expense">Expenses</button>
+          </div>
+        </div>
+        <div class="transactions-list" id="txnList">
+          <p class="empty-state">No transactions yet. Add one above!</p>
+        </div>
+      </div>
 
-      // Switch pages
-      signinPage.classList.add('hidden');
-      trackerPage.classList.remove('hidden');
-
-      // Scroll top
-      window.scrollTo(0, 0);
-    });
-
-    // Sign out
-    signoutBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-
-      trackerPage.classList.add('hidden');
-      signinPage.classList.remove('hidden');
-
-      document.getElementById('password').value = '';
-    });
-
-    // Enter key
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' && !signinPage.classList.contains('hidden')) {
-        signinBtn.click();
-      }
-    });
-  </script src="script.js"></script>
-
-</body>
+      <footer class="page-footer">Crafted with care · <strong>Aurum</strong> · 2025</footer>
+    </div>
+  </div>
+  </body>
+  <script src="script.js"></script>
 </html>
