@@ -3,71 +3,88 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Expense Tracker — Aurum</title>
+  <title>Aurum Finance</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <style>
-    /* ─── CSS Variables ─── */
     :root {
-      --cream:          #faf7f2;
-      --parchment:      #f2ece0;
-      --warm-white:     #ffffff;
-      --gold:           #c9a84c;
-      --gold-light:     #e8d5a3;
-      --gold-pale:      #f5edda;
-      --charcoal:       #2c2c2c;
-      --smoke:          #6b6460;
-      --ash:            #9b948f;
-      --income-deep:    #2d6a4f;
-      --income-mid:     #52b788;
-      --income-pale:    #d8f3e8;
-      --expense-deep:   #9b2226;
-      --expense-mid:    #e63946;
-      --expense-pale:   #fde8ea;
-      --border:         #e8e0d5;
-      --shadow-soft:    0 4px 24px rgba(44, 36, 20, 0.07);
-      --shadow-card:    0 8px 40px rgba(44, 36, 20, 0.10);
-      --radius-sm:      10px;
-      --radius-md:      18px;
-      --radius-lg:      28px;
-      --transition:     0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --cream:        #faf7f2;
+      --parchment:    #f2ece0;
+      --warm-white:   #ffffff;
+      --gold:         #c9a84c;
+      --gold-light:   #e8d5a3;
+      --gold-pale:    #f5edda;
+      --charcoal:     #2c2c2c;
+      --smoke:        #6b6460;
+      --ash:          #9b948f;
+      --border:       #e8e0d5;
 
-      /* Category colours */
-      --cat-food:       #e07a5f;
-      --cat-transport:  #3d7ebe;
-      --cat-shopping:   #9c6fb5;
-      --cat-utilities:  #e08c3a;
-      --cat-health:     #4caf82;
-      --cat-salary:     #52b788;
-      --cat-freelance:  #c9a84c;
-      --cat-other:      #9b948f;
+      --income-mid:   #52b788;
+      --income-deep:  #2d6a4f;
+      --income-pale:  #d8f3e8;
+
+      --expense-mid:  #e63946;
+      --expense-deep: #9b2226;
+      --expense-pale: #fde8ea;
+
+      --shadow-soft:  0 4px 24px rgba(44, 36, 20, 0.07);
+      --shadow-card:  0 8px 40px rgba(44, 36, 20, 0.13);
+
+      --radius-sm:    10px;
+      --radius-md:    18px;
+      --radius-lg:    28px;
+
+      --transition:   0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    /* ─── Reset & Base ─── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
     body {
       font-family: 'Montserrat', sans-serif;
       background-color: var(--cream);
       background-image:
-        radial-gradient(ellipse at 20% 0%,   rgba(201,168,76,0.08)  0%, transparent 60%),
-        radial-gradient(ellipse at 80% 100%, rgba(82,183,136,0.06)  0%, transparent 60%);
+        radial-gradient(ellipse at 15% 10%, rgba(201,168,76,0.10) 0%, transparent 55%),
+        radial-gradient(ellipse at 85% 90%, rgba(82,183,136,0.08) 0%, transparent 55%);
       min-height: 100vh;
       color: var(--charcoal);
-      padding: 48px 20px 80px;
+      padding: 30px 20px;
     }
 
-    /* ─── Layout ─── */
-    .container { max-width: 620px; margin: 0 auto; }
+    .hidden {
+      display: none !important;
+    }
 
-    /* ─── Header ─── */
+    .container {
+      max-width: 620px;
+      margin: 0 auto;
+    }
+
+    /* =========================
+       SIGN IN
+    ========================= */
+
+    .signin-wrap {
+      width: 100%;
+      max-width: 420px;
+      margin: auto;
+      animation: fadeUp 0.7s ease both;
+    }
+
+    .signin-header,
     .header {
       text-align: center;
-      margin-bottom: 44px;
-      animation: fadeDown 0.7s ease both;
+      margin-bottom: 36px;
     }
+
+    .signin-header__eyebrow,
     .header__eyebrow {
       display: inline-flex;
       align-items: center;
@@ -79,50 +96,79 @@
       color: var(--gold);
       margin-bottom: 14px;
     }
+
+    .signin-header__eyebrow::before,
+    .signin-header__eyebrow::after,
     .header__eyebrow::before,
     .header__eyebrow::after {
       content: '';
-      display: block;
       width: 28px;
       height: 1px;
       background: var(--gold-light);
     }
+
+    .signin-header__title,
     .header__title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(38px, 8vw, 54px);
+      font-size: clamp(42px, 10vw, 58px);
       font-weight: 300;
-      letter-spacing: 0.04em;
-      color: var(--charcoal);
-      line-height: 1.1;
+      line-height: 1;
+      letter-spacing: 0.06em;
     }
-    .header__title span { font-style: italic; color: var(--gold); }
+
+    .signin-header__title span,
+    .header__title span {
+      color: var(--gold);
+      font-style: italic;
+    }
+
+    .signin-header__sub,
     .header__sub {
-      margin-top: 10px;
+      margin-top: 8px;
       font-size: 11px;
-      font-weight: 400;
       letter-spacing: 0.14em;
-      color: var(--ash);
       text-transform: uppercase;
+      color: var(--ash);
     }
+
+    .signin-header__line,
     .header__line {
       width: 48px;
       height: 1px;
       background: linear-gradient(90deg, transparent, var(--gold), transparent);
-      margin: 18px auto 0;
+      margin: 16px auto 0;
     }
 
-    /* ─── Section Label ─── */
+    .signin-card,
+    .form-card,
+    .transactions-card,
+    .categories-card,
+    .budget-card,
+    .overview-tile {
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .signin-card {
+      padding: 36px;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+    }
+
     .section-label {
       font-size: 9px;
       font-weight: 600;
       letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--gold);
-      margin-bottom: 16px;
+      margin-bottom: 18px;
       display: flex;
       align-items: center;
       gap: 10px;
     }
+
     .section-label::after {
       content: '';
       flex: 1;
@@ -130,274 +176,12 @@
       background: var(--border);
     }
 
-    /* ═══════════════════════════════════════
-       BALANCE CARD
-    ═══════════════════════════════════════ */
-    .balance-card {
-      background: var(--charcoal);
-      border-radius: var(--radius-lg);
-      padding: 36px 36px 30px;
-      margin-bottom: 22px;
-      position: relative;
-      overflow: hidden;
-      box-shadow: var(--shadow-card);
-      animation: fadeUp 0.7s 0.1s ease both;
-    }
-    .balance-card::before {
-      content: '';
-      position: absolute;
-      top: -60px; right: -60px;
-      width: 200px; height: 200px;
-      background: radial-gradient(circle, rgba(201,168,76,0.18) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .balance-card::after {
-      content: '';
-      position: absolute;
-      bottom: -40px; left: -40px;
-      width: 160px; height: 160px;
-      background: radial-gradient(circle, rgba(82,183,136,0.10) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .balance-label {
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--ash);
-      margin-bottom: 6px;
-    }
-    .balance-month {
-      font-size: 9px;
-      font-weight: 400;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 8px;
-    }
-    .balance-amount {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(40px, 10vw, 56px);
-      font-weight: 300;
-      color: var(--warm-white);
-      letter-spacing: 0.02em;
-      line-height: 1;
-    }
-    .balance-amount .currency {
-      font-size: 0.45em;
-      vertical-align: super;
-      color: var(--gold);
-      font-weight: 500;
-      margin-right: 2px;
-    }
-    .balance-divider {
-      width: 100%;
-      height: 1px;
-      background: rgba(255,255,255,0.08);
-      margin: 22px 0;
-    }
-    .balance-stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-    .stat { display: flex; align-items: flex-start; gap: 12px; }
-    .stat__icon {
-      width: 34px; height: 34px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
-    .stat--income .stat__icon  { background: rgba(82,183,136,0.15);  color: var(--income-mid); }
-    .stat--expense .stat__icon { background: rgba(230,57,70,0.12);   color: var(--expense-mid); }
-    .stat__label {
-      font-size: 9px; font-weight: 600;
-      letter-spacing: 0.18em; text-transform: uppercase;
-      color: var(--ash); margin-bottom: 3px;
-    }
-    .stat__value {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 22px; font-weight: 400;
-      letter-spacing: 0.02em; line-height: 1;
-    }
-    .stat--income  .stat__value { color: var(--income-mid); }
-    .stat--expense .stat__value { color: var(--expense-mid); }
-
-    /* ═══════════════════════════════════════
-       DASHBOARD / OVERVIEW SECTION  ← NEW
-    ═══════════════════════════════════════ */
-    .dashboard {
-      margin-bottom: 22px;
-      animation: fadeUp 0.7s 0.2s ease both;
-    }
-
-    /* Spending Progress Bar */
-    .budget-card {
-      background: var(--warm-white);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 22px 24px;
-      margin-bottom: 14px;
-      box-shadow: var(--shadow-soft);
-    }
-    .budget-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      margin-bottom: 12px;
-    }
-    .budget-title {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--charcoal);
-    }
-    .budget-figures {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 15px;
-      color: var(--ash);
-    }
-    .budget-figures strong {
-      color: var(--expense-mid);
-      font-weight: 500;
-    }
-    .progress-track {
-      width: 100%;
-      height: 6px;
-      background: var(--parchment);
-      border-radius: 99px;
-      overflow: hidden;
-    }
-    .progress-fill {
-      height: 100%;
-      border-radius: 99px;
-      background: linear-gradient(90deg, var(--income-mid), var(--gold));
-      width: 34%; /* 7250 / 21500 ≈ 34% */
-      transition: width 1s ease;
-    }
-    .progress-fill--warning { background: linear-gradient(90deg, var(--gold), var(--expense-mid)); }
-    .budget-note {
-      margin-top: 8px;
-      font-size: 10px;
-      color: var(--ash);
-      letter-spacing: 0.06em;
-    }
-    .budget-note span { color: var(--income-deep); font-weight: 600; }
-
-    /* Overview Stat Grid */
-    .overview-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-    }
-    .overview-tile {
-      background: var(--warm-white);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 16px 14px;
-      box-shadow: var(--shadow-soft);
-      text-align: center;
-    }
-    .overview-tile__icon {
-      font-size: 18px;
-      margin-bottom: 6px;
-    }
-    .overview-tile__value {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 22px;
-      font-weight: 400;
-      color: var(--charcoal);
-      line-height: 1;
-      margin-bottom: 4px;
-    }
-    .overview-tile__label {
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--ash);
-    }
-
-    /* ═══════════════════════════════════════
-       CATEGORY BREAKDOWN  ← NEW
-    ═══════════════════════════════════════ */
-    .categories-card {
-      background: var(--warm-white);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 24px 24px 18px;
-      margin-bottom: 22px;
-      box-shadow: var(--shadow-soft);
-      animation: fadeUp 0.7s 0.25s ease both;
-    }
-    .cat-list {
+    .form-group {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 6px;
+      margin-bottom: 16px;
     }
-    .cat-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .cat-dot {
-      width: 9px; height: 9px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-    .cat-name {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--charcoal);
-      flex: 1;
-      min-width: 80px;
-    }
-    .cat-bar-track {
-      flex: 3;
-      height: 5px;
-      background: var(--parchment);
-      border-radius: 99px;
-      overflow: hidden;
-    }
-    .cat-bar-fill {
-      height: 100%;
-      border-radius: 99px;
-    }
-    .cat-amount {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 15px;
-      font-weight: 500;
-      color: var(--charcoal);
-      white-space: nowrap;
-      min-width: 80px;
-      text-align: right;
-    }
-
-    /* ═══════════════════════════════════════
-       FORM CARD
-    ═══════════════════════════════════════ */
-    .form-card {
-      background: var(--warm-white);
-      border-radius: var(--radius-md);
-      padding: 28px 26px;
-      margin-bottom: 22px;
-      box-shadow: var(--shadow-soft);
-      border: 1px solid var(--border);
-      animation: fadeUp 0.7s 0.3s ease both;
-    }
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 13px;
-      margin-bottom: 13px;
-    }
-    .form-group { display: flex; flex-direction: column; gap: 6px; }
-    .form-group--full { grid-column: 1 / -1; }
 
     .form-group label {
       font-size: 9px;
@@ -406,655 +190,885 @@
       text-transform: uppercase;
       color: var(--ash);
     }
+
     .form-control {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 13px;
-      font-weight: 400;
-      color: var(--charcoal);
-      background: var(--cream);
+      width: 100%;
       border: 1.5px solid var(--border);
       border-radius: var(--radius-sm);
-      padding: 11px 14px;
+      padding: 12px 14px;
+      background: var(--cream);
+      font-family: inherit;
       outline: none;
-      transition: border-color var(--transition), box-shadow var(--transition), background var(--transition);
-      width: 100%;
-      appearance: none;
-      -webkit-appearance: none;
+      transition: 0.3s;
     }
-    .form-control::placeholder { color: var(--ash); font-weight: 300; }
+
     .form-control:focus {
       border-color: var(--gold);
       box-shadow: 0 0 0 3px rgba(201,168,76,0.10);
-      background: var(--warm-white);
+      background: white;
     }
 
-    /* Date input custom styling */
-    input[type="date"].form-control {
-      color: var(--charcoal);
-      cursor: pointer;
-    }
-    input[type="date"].form-control::-webkit-calendar-picker-indicator {
-      opacity: 0.5;
-      cursor: pointer;
-      filter: sepia(1) saturate(2) hue-rotate(5deg);
+    .input-wrap {
+      position: relative;
     }
 
-    /* Select custom arrow */
-    select.form-control {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c9a84c' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 14px center;
-      padding-right: 36px;
-      cursor: pointer;
+    .input-wrap .form-control {
+      padding-right: 44px;
     }
 
+    .toggle-pw {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    .forgot-row {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 22px;
+    }
+
+    .forgot-link {
+      font-size: 10px;
+      color: var(--ash);
+      text-decoration: none;
+    }
+
+    .btn-signin,
     .btn-add {
       width: 100%;
-      font-family: 'Montserrat', sans-serif;
+      border: none;
+      border-radius: var(--radius-sm);
+      background: var(--charcoal);
+      color: white;
+      padding: 14px;
+      cursor: pointer;
       font-size: 11px;
       font-weight: 600;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--warm-white);
-      background: var(--charcoal);
-      border: none;
-      border-radius: var(--radius-sm);
-      padding: 14px 20px;
-      cursor: pointer;
-      transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
-      margin-top: 6px;
-      position: relative;
-      overflow: hidden;
+      transition: 0.3s;
     }
-    .btn-add::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, transparent 40%, rgba(201,168,76,0.15));
-      opacity: 0;
-      transition: opacity var(--transition);
-    }
-    .btn-add:hover {
-      background: #1a1a1a;
-      transform: translateY(-1px);
-      box-shadow: 0 6px 20px rgba(44,36,20,0.22);
-    }
-    .btn-add:hover::before { opacity: 1; }
-    .btn-add:active { transform: translateY(0); }
 
-    /* ═══════════════════════════════════════
-       TRANSACTION LIST
-    ═══════════════════════════════════════ */
-    .transactions-card {
-      background: var(--warm-white);
-      border-radius: var(--radius-md);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-soft);
-      overflow: hidden;
-      animation: fadeUp 0.7s 0.35s ease both;
+    .btn-signin:hover,
+    .btn-add:hover {
+      background: black;
+      transform: translateY(-1px);
     }
+
+    .error-msg {
+      display: none;
+      background: rgba(230,57,70,0.08);
+      border: 1px solid rgba(230,57,70,0.2);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      font-size: 11px;
+      color: #9b2226;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .error-msg.visible {
+      display: block;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 24px 0;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .divider span {
+      font-size: 9px;
+      color: var(--ash);
+      text-transform: uppercase;
+    }
+
+    .social-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .btn-social {
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 11px 14px;
+      background: var(--cream);
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn-social:hover {
+      border-color: var(--gold);
+      background: var(--gold-pale);
+    }
+
+    .signin-footer,
+    .footer {
+      text-align: center;
+      margin-top: 26px;
+      font-size: 11px;
+      color: var(--ash);
+    }
+
+    .signin-footer a {
+      color: var(--gold);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .demo-hint {
+      text-align: center;
+      margin-top: 18px;
+      font-size: 10px;
+      color: var(--ash);
+      background: var(--gold-pale);
+      border: 1px dashed var(--gold-light);
+      border-radius: var(--radius-sm);
+      padding: 9px 14px;
+    }
+
+    /* =========================
+       TRACKER
+    ========================= */
+
+    .top-nav {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 16px;
+    }
+
+    .btn-signout {
+      border: 1px solid var(--border);
+      border-radius: 99px;
+      padding: 8px 14px;
+      text-decoration: none;
+      color: var(--ash);
+      font-size: 10px;
+      transition: 0.3s;
+    }
+
+    .btn-signout:hover {
+      background: var(--parchment);
+      color: var(--charcoal);
+    }
+
+    .balance-card {
+      background: var(--charcoal);
+      border-radius: var(--radius-lg);
+      padding: 36px;
+      color: white;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .balance-label {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ash);
+      margin-bottom: 6px;
+    }
+
+    .balance-month {
+      color: var(--gold);
+      font-size: 9px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .balance-amount {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 56px;
+      font-weight: 300;
+    }
+
+    .balance-divider {
+      width: 100%;
+      height: 1px;
+      background: rgba(255,255,255,0.1);
+      margin: 20px 0;
+    }
+
+    .balance-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .stat__value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+    }
+
+    .dashboard {
+      margin-bottom: 22px;
+    }
+
+    .budget-card {
+      padding: 22px;
+      margin-bottom: 14px;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 6px;
+      background: var(--parchment);
+      border-radius: 99px;
+      overflow: hidden;
+      margin: 12px 0;
+    }
+
+    .progress-fill {
+      width: 34%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--income-mid), var(--gold));
+    }
+
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .overview-tile {
+      padding: 16px;
+      text-align: center;
+    }
+
+    .overview-tile__value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      margin: 5px 0;
+    }
+
+    .categories-card {
+      padding: 24px;
+      margin-bottom: 22px;
+    }
+
+    .cat-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .cat-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .cat-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+    }
+
+    .cat-bar-track {
+      flex: 1;
+      height: 5px;
+      background: var(--parchment);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .cat-bar-fill {
+      height: 100%;
+    }
+
+    .form-card {
+      padding: 28px;
+      margin-bottom: 22px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 13px;
+      margin-bottom: 13px;
+    }
+
+    .form-group--full {
+      grid-column: 1 / -1;
+    }
+
+    .transactions-card {
+      overflow: hidden;
+    }
+
     .transactions-header {
       padding: 22px 24px 0;
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 10px;
+      align-items: center;
     }
-    .transactions-header .section-label { margin-bottom: 0; flex: 1; }
 
-    /* Filter tabs */
     .filter-tabs {
       display: flex;
       gap: 6px;
-      padding-bottom: 4px;
     }
+
     .filter-tab {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      padding: 5px 11px;
+      border: 1px solid var(--border);
       border-radius: 99px;
-      border: 1.5px solid var(--border);
+      padding: 5px 11px;
       background: transparent;
-      color: var(--ash);
       cursor: pointer;
-      transition: all var(--transition);
+      font-size: 9px;
     }
-    .filter-tab:hover  { border-color: var(--gold); color: var(--gold); }
+
     .filter-tab.active {
       background: var(--charcoal);
-      border-color: var(--charcoal);
-      color: var(--warm-white);
+      color: white;
     }
 
     .transactions-list {
-      padding: 14px 14px 16px;
+      padding: 14px;
       display: flex;
       flex-direction: column;
       gap: 8px;
     }
 
-    /* Month group header */
-    .txn-month-group {
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--ash);
-      padding: 6px 4px 2px;
-      margin-top: 4px;
-    }
-    .txn-month-group:first-child { margin-top: 0; }
-
-    /* Transaction row */
     .txn {
       display: flex;
       align-items: center;
       gap: 12px;
       padding: 13px 14px;
       border-radius: var(--radius-sm);
-      transition: background var(--transition), transform var(--transition);
-      cursor: default;
-      position: relative;
     }
-    .txn:hover { transform: translateX(3px); }
-    .txn--income  { background: var(--income-pale); }
-    .txn--expense { background: var(--expense-pale); }
+
+    .txn--income {
+      background: var(--income-pale);
+    }
+
+    .txn--expense {
+      background: var(--expense-pale);
+    }
 
     .txn__dot {
-      width: 8px; height: 8px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
-      flex-shrink: 0;
     }
-    .txn--income  .txn__dot { background: var(--income-mid);  box-shadow: 0 0 0 3px rgba(82,183,136,0.2); }
-    .txn--expense .txn__dot { background: var(--expense-mid); box-shadow: 0 0 0 3px rgba(230,57,70,0.15); }
 
-    .txn__info { flex: 1; min-width: 0; }
+    .txn--income .txn__dot {
+      background: var(--income-mid);
+    }
+
+    .txn--expense .txn__dot {
+      background: var(--expense-mid);
+    }
+
+    .txn__info {
+      flex: 1;
+    }
 
     .txn__desc {
-      font-size: 13px; font-weight: 500;
-      color: var(--charcoal);
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      font-size: 13px;
+      font-weight: 500;
     }
 
     .txn__meta {
-      display: flex;
-      align-items: center;
-      gap: 8px;
       margin-top: 3px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
     }
 
-    /* Category badge  ← NEW */
     .txn__badge {
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
       padding: 2px 7px;
       border-radius: 99px;
-      opacity: 0.9;
+      font-size: 9px;
+      text-transform: uppercase;
     }
 
-    /* Date label  ← NEW */
-    .txn__date {
-      font-size: 10px;
-      font-weight: 400;
-      letter-spacing: 0.06em;
-      color: var(--ash);
+    .badge--salary {
+      background: rgba(82,183,136,0.15);
+      color: #2d6a4f;
     }
 
-    .txn__right {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 3px;
+    .badge--freelance {
+      background: rgba(201,168,76,0.15);
+      color: #8a6a1f;
+    }
+
+    .badge--shopping {
+      background: rgba(156,111,181,0.15);
+      color: #7a4a9e;
+    }
+
+    .badge--utilities {
+      background: rgba(224,140,58,0.15);
+      color: #b5651d;
+    }
+
+    .badge--food {
+      background: rgba(224,122,95,0.15);
+      color: #c05a40;
+    }
+
+    .badge--transport {
+      background: rgba(61,126,190,0.15);
+      color: #2a5f9a;
+    }
+
+    .badge--other {
+      background: rgba(155,148,143,0.15);
+      color: #6b6460;
     }
 
     .txn__amount {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 19px; font-weight: 500;
-      letter-spacing: 0.02em;
-      white-space: nowrap;
+      font-size: 20px;
     }
-    .txn--income  .txn__amount { color: var(--income-deep); }
-    .txn--expense .txn__amount { color: var(--expense-deep); }
 
-    .txn__sign { font-size: 14px; font-weight: 600; margin-right: 1px; }
-
-    /* ─── Category badge colour helpers ─── */
-    .badge--food       { background: rgba(224,122,95,0.15);  color: #c05a40; }
-    .badge--transport  { background: rgba(61,126,190,0.15);  color: #2a5f9a; }
-    .badge--shopping   { background: rgba(156,111,181,0.15); color: #7a4a9e; }
-    .badge--utilities  { background: rgba(224,140,58,0.15);  color: #b5651d; }
-    .badge--health     { background: rgba(76,175,130,0.15);  color: #2e7d5e; }
-    .badge--salary     { background: rgba(82,183,136,0.15);  color: #2d6a4f; }
-    .badge--freelance  { background: rgba(201,168,76,0.15);  color: #8a6a1f; }
-    .badge--other      { background: rgba(155,148,143,0.15); color: #6b6460; }
-
-    /* ─── Footer ─── */
-    .footer {
-      text-align: center;
-      margin-top: 48px;
-      font-size: 10px;
-      letter-spacing: 0.14em;
-      color: var(--gold-light);
-      text-transform: uppercase;
-      animation: fadeUp 0.7s 0.5s ease both;
-    }
-    .footer span { color: var(--gold); }
-
-    /* ─── Animations ─── */
-    @keyframes fadeDown {
-      from { opacity: 0; transform: translateY(-20px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
-    /* ─── Responsive ─── */
     @media (max-width: 540px) {
-      body { padding: 32px 14px 60px; }
-      .balance-card  { padding: 26px 20px 22px; }
-      .form-card     { padding: 22px 16px; }
-      .form-grid     { grid-template-columns: 1fr; }
-      .overview-grid { grid-template-columns: 1fr 1fr; }
-      .balance-stats { gap: 10px; }
-      .transactions-header { flex-direction: column; align-items: flex-start; }
-      .filter-tabs   { width: 100%; justify-content: flex-start; }
-      .cat-bar-track { flex: 2; }
-    }
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
 
-    @media (max-width: 340px) {
-      .overview-grid { grid-template-columns: 1fr; }
+      .overview-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .social-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .transactions-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
     }
   </style>
 </head>
 <body>
 
-<div class="container">
+  <!-- =========================
+       SIGN IN PAGE
+  ========================== -->
 
-  <!-- ░░░ HEADER ░░░ -->
-  <header class="header">
-    <div class="header__eyebrow">Aurum Finance</div>
-    <h1 class="header__title">Expense <span>Tracker</span></h1>
-    <p class="header__sub">Your personal finance overview</p>
-    <div class="header__line"></div>
-  </header>
+  <div class="signin-wrap" id="signinPage">
 
-  <!-- ░░░ BALANCE CARD ░░░ -->
-  <div class="balance-card">
-    <p class="balance-label">Total Balance</p>
-    <p class="balance-month">April 2025</p>
-    <div class="balance-amount">
-      <span class="currency">R</span>14,250.00
+    <header class="signin-header">
+      <div class="signin-header__eyebrow">Aurum Finance</div>
+
+      <h1 class="signin-header__title">
+        Wel<span>come</span>
+      </h1>
+
+      <p class="signin-header__sub">
+        Sign in to your account
+      </p>
+
+      <div class="signin-header__line"></div>
+    </header>
+
+    <div class="signin-card">
+
+      <p class="section-label">Credentials</p>
+
+      <div class="error-msg" id="errorMsg">
+        Invalid email or password.
+      </div>
+
+      <div class="form-group">
+        <label>Email Address</label>
+
+        <input
+          type="email"
+          id="email"
+          class="form-control"
+          placeholder="you@example.com"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+
+        <div class="input-wrap">
+          <input
+            type="password"
+            id="password"
+            class="form-control"
+            placeholder="••••••••"
+          />
+
+          <button class="toggle-pw" id="togglePw">
+            👁
+          </button>
+        </div>
+      </div>
+
+      <div class="forgot-row">
+        <a href="#" class="forgot-link">
+          Forgot password?
+        </a>
+      </div>
+
+      <button class="btn-signin" id="signinBtn">
+        Sign In
+      </button>
+
+      <div class="divider">
+        <span>or continue with</span>
+      </div>
+
+      <div class="social-grid">
+        <button class="btn-social">Google</button>
+        <button class="btn-social">Apple</button>
+      </div>
+
     </div>
 
-    <div class="balance-divider"></div>
+    <div class="demo-hint">
+      Demo: use any email & password
+      <strong>test123</strong>
+    </div>
 
-    <div class="balance-stats">
-      <div class="stat stat--income">
-        <div class="stat__icon">↑</div>
-        <div class="stat__body">
-          <p class="stat__label">Income</p>
+    <p class="signin-footer">
+      Don't have an account?
+      <a href="#">Create one →</a>
+    </p>
+
+  </div>
+
+  <!-- =========================
+       TRACKER PAGE
+  ========================== -->
+
+  <div class="container hidden" id="trackerPage">
+
+    <nav class="top-nav">
+      <a href="#" class="btn-signout" id="signoutBtn">
+        ⎋ Sign Out
+      </a>
+    </nav>
+
+    <header class="header">
+      <div class="header__eyebrow">Aurum Finance</div>
+
+      <h1 class="header__title">
+        Expense <span>Tracker</span>
+      </h1>
+
+      <p class="header__sub">
+        Your personal finance overview
+      </p>
+
+      <div class="header__line"></div>
+    </header>
+
+    <div class="balance-card">
+      <p class="balance-label">Total Balance</p>
+      <p class="balance-month">April 2025</p>
+
+      <div class="balance-amount">
+        R14,250.00
+      </div>
+
+      <div class="balance-divider"></div>
+
+      <div class="balance-stats">
+
+        <div>
+          <p class="balance-label">Income</p>
           <p class="stat__value">R 21,500.00</p>
         </div>
-      </div>
-      <div class="stat stat--expense">
-        <div class="stat__icon">↓</div>
-        <div class="stat__body">
-          <p class="stat__label">Expenses</p>
+
+        <div>
+          <p class="balance-label">Expenses</p>
           <p class="stat__value">R 7,250.00</p>
         </div>
+
       </div>
     </div>
+
+    <div class="dashboard">
+
+      <p class="section-label">Overview</p>
+
+      <div class="budget-card">
+
+        <div style="display:flex;justify-content:space-between;">
+          <span>Monthly Spending</span>
+          <span><strong>R 7,250</strong> of R 21,500</span>
+        </div>
+
+        <div class="progress-track">
+          <div class="progress-fill"></div>
+        </div>
+
+        <p style="font-size:10px;color:var(--ash);">
+          You have spent 34% of your total income this month.
+        </p>
+
+      </div>
+
+      <div class="overview-grid">
+
+        <div class="overview-tile">
+          <div>🧾</div>
+          <div class="overview-tile__value">8</div>
+          <div>Transactions</div>
+        </div>
+
+        <div class="overview-tile">
+          <div>📅</div>
+          <div class="overview-tile__value">Apr</div>
+          <div>Current Month</div>
+        </div>
+
+        <div class="overview-tile">
+          <div>💸</div>
+          <div class="overview-tile__value">R 906</div>
+          <div>Avg. Expense</div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Categories -->
+    <div class="categories-card">
+
+      <p class="section-label">Categories</p>
+
+      <div class="cat-list">
+
+        <div class="cat-row">
+          <span class="cat-dot" style="background:#52b788;"></span>
+          <span>Salary</span>
+
+          <div class="cat-bar-track">
+            <div class="cat-bar-fill" style="width:70%;background:#52b788;"></div>
+          </div>
+
+          <span>R 15,000</span>
+        </div>
+
+        <div class="cat-row">
+          <span class="cat-dot" style="background:#e07a5f;"></span>
+          <span>Food</span>
+
+          <div class="cat-bar-track">
+            <div class="cat-bar-fill" style="width:18%;background:#e07a5f;"></div>
+          </div>
+
+          <span>R 1,320</span>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Form -->
+    <div class="form-card">
+
+      <p class="section-label">New Transaction</p>
+
+      <div class="form-grid">
+
+        <div class="form-group form-group--full">
+          <label>Description</label>
+
+          <input
+            type="text"
+            class="form-control"
+            placeholder="e.g. Grocery run"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Amount</label>
+
+          <input
+            type="number"
+            class="form-control"
+            placeholder="0.00"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Date</label>
+
+          <input
+            type="date"
+            class="form-control"
+          />
+        </div>
+
+      </div>
+
+      <button class="btn-add">
+        + Add Transaction
+      </button>
+
+    </div>
+
+    <!-- Transactions -->
+    <div class="transactions-card">
+
+      <div class="transactions-header">
+
+        <p class="section-label">
+          Transaction History
+        </p>
+
+        <div class="filter-tabs">
+          <button class="filter-tab active">All</button>
+          <button class="filter-tab">Income</button>
+          <button class="filter-tab">Expenses</button>
+        </div>
+
+      </div>
+
+      <div class="transactions-list">
+
+        <div class="txn txn--income">
+          <span class="txn__dot"></span>
+
+          <div class="txn__info">
+            <p class="txn__desc">Monthly Salary</p>
+
+            <div class="txn__meta">
+              <span class="txn__badge badge--salary">Salary</span>
+              <span>27 Apr 2025</span>
+            </div>
+          </div>
+
+          <div class="txn__amount">
+            +R 15,000.00
+          </div>
+        </div>
+
+        <div class="txn txn--expense">
+          <span class="txn__dot"></span>
+
+          <div class="txn__info">
+            <p class="txn__desc">Grocery Shopping</p>
+
+            <div class="txn__meta">
+              <span class="txn__badge badge--food">Food</span>
+              <span>20 Apr 2025</span>
+            </div>
+          </div>
+
+          <div class="txn__amount">
+            −R 1,320.00
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <footer class="footer">
+      Crafted with care · <span>Aurum</span> · 2025
+    </footer>
+
   </div>
 
-  <!-- ░░░ DASHBOARD / OVERVIEW ░░░ -->
-  <div class="dashboard">
-    <p class="section-label">Overview</p>
+  <script>
+    // Password toggle
+    const togglePw = document.getElementById('togglePw');
+    const pwInput = document.getElementById('password');
 
-    <!-- Budget / Spending Progress -->
-    <div class="budget-card">
-      <div class="budget-top">
-        <span class="budget-title">Monthly Spending</span>
-        <span class="budget-figures"><strong>R 7,250</strong> of R 21,500</span>
-      </div>
-      <div class="progress-track">
-        <div class="progress-fill"></div>
-      </div>
-      <p class="budget-note">You have spent <span>34%</span> of your total income this month. Well done!</p>
-    </div>
+    togglePw.addEventListener('click', () => {
+      const hidden = pwInput.type === 'password';
 
-    <!-- Quick stats tiles -->
-    <div class="overview-grid">
-      <div class="overview-tile">
-        <div class="overview-tile__icon">🧾</div>
-        <div class="overview-tile__value">8</div>
-        <div class="overview-tile__label">Transactions</div>
-      </div>
-      <div class="overview-tile">
-        <div class="overview-tile__icon">📅</div>
-        <div class="overview-tile__value">Apr</div>
-        <div class="overview-tile__label">Current Month</div>
-      </div>
-      <div class="overview-tile">
-        <div class="overview-tile__icon">💸</div>
-        <div class="overview-tile__value">R 906</div>
-        <div class="overview-tile__label">Avg. Expense</div>
-      </div>
-    </div>
-  </div>
+      pwInput.type = hidden ? 'text' : 'password';
+      togglePw.textContent = hidden ? '🙈' : '👁';
+    });
 
-  <!-- ░░░ CATEGORY BREAKDOWN ░░░ -->
-  <div class="categories-card">
-    <p class="section-label">Categories</p>
-    <div class="cat-list">
+    // Pages
+    const signinPage = document.getElementById('signinPage');
+    const trackerPage = document.getElementById('trackerPage');
 
-      <!-- Salary -->
-      <div class="cat-row">
-        <span class="cat-dot" style="background:#52b788;"></span>
-        <span class="cat-name">Salary</span>
-        <div class="cat-bar-track">
-          <div class="cat-bar-fill" style="width:70%; background:#52b788;"></div>
-        </div>
-        <span class="cat-amount">R 15,000</span>
-      </div>
+    // Buttons
+    const signinBtn = document.getElementById('signinBtn');
+    const signoutBtn = document.getElementById('signoutBtn');
 
-      <!-- Freelance -->
-      <div class="cat-row">
-        <span class="cat-dot" style="background:#c9a84c;"></span>
-        <span class="cat-name">Freelance</span>
-        <div class="cat-bar-track">
-          <div class="cat-bar-fill" style="width:30%; background:#c9a84c;"></div>
-        </div>
-        <span class="cat-amount">R 6,500</span>
-      </div>
+    // Error
+    const errorMsg = document.getElementById('errorMsg');
 
-      <!-- Food -->
-      <div class="cat-row">
-        <span class="cat-dot" style="background:#e07a5f;"></span>
-        <span class="cat-name">Food</span>
-        <div class="cat-bar-track">
-          <div class="cat-bar-fill" style="width:18%; background:#e07a5f;"></div>
-        </div>
-        <span class="cat-amount">R 1,320</span>
-      </div>
+    // Sign in
+    signinBtn.addEventListener('click', () => {
 
-      <!-- Shopping -->
-      <div class="cat-row">
-        <span class="cat-dot" style="background:#9c6fb5;"></span>
-        <span class="cat-name">Shopping</span>
-        <div class="cat-bar-track">
-          <div class="cat-bar-fill" style="width:11%; background:#9c6fb5;"></div>
-        </div>
-        <span class="cat-amount">R 2,450</span>
-      </div>
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
 
-      <!-- Utilities -->
-      <div class="cat-row">
-        <span class="cat-dot" style="background:#e08c3a;"></span>
-        <span class="cat-name">Utilities</span>
-        <div class="cat-bar-track">
-          <div class="cat-bar-fill" style="width:5%; background:#e08c3a;"></div>
-        </div>
-        <span class="cat-amount">R 980</span>
-      </div>
+      errorMsg.classList.remove('visible');
 
-      <!-- Transport -->
-      <div class="cat-row">
-        <span class="cat-dot" style="background:#3d7ebe;"></span>
-        <span class="cat-name">Transport</span>
-        <div class="cat-bar-track">
-          <div class="cat-bar-fill" style="width:3%; background:#3d7ebe;"></div>
-        </div>
-        <span class="cat-amount">R 620</span>
-      </div>
+      if (!email || !password) {
+        errorMsg.textContent =
+          'Please enter your email and password.';
 
-      <!-- Other -->
-      <div class="cat-row">
-        <span class="cat-dot" style="background:#9b948f;"></span>
-        <span class="cat-name">Other</span>
-        <div class="cat-bar-track">
-          <div class="cat-bar-fill" style="width:4%; background:#9b948f;"></div>
-        </div>
-        <span class="cat-amount">R 880</span>
-      </div>
+        errorMsg.classList.add('visible');
+        return;
+      }
 
-    </div>
-  </div>
+      if (password !== 'test123') {
+        errorMsg.textContent =
+          'Invalid email or password.';
 
-  <!-- ░░░ ADD TRANSACTION FORM ░░░ -->
-  <div class="form-card">
-    <p class="section-label">New Transaction</p>
+        errorMsg.classList.add('visible');
+        return;
+      }
 
-    <div class="form-grid">
+      // Switch pages
+      signinPage.classList.add('hidden');
+      trackerPage.classList.remove('hidden');
 
-      <!-- Description — full width -->
-      <div class="form-group form-group--full">
-        <label for="desc">Description</label>
-        <input
-          type="text"
-          id="desc"
-          class="form-control"
-          placeholder="e.g. Grocery run, Monthly salary…"
-        />
-      </div>
+      // Scroll top
+      window.scrollTo(0, 0);
+    });
 
-      <!-- Amount -->
-      <div class="form-group">
-        <label for="amount">Amount (R)</label>
-        <input
-          type="number"
-          id="amount"
-          class="form-control"
-          placeholder="0.00"
-          min="0"
-          step="0.01"
-        />
-      </div>
+    // Sign out
+    signoutBtn.addEventListener('click', (e) => {
+      e.preventDefault();
 
-      <!-- Date  ← NEW -->
-      <div class="form-group">
-        <label for="date">Date</label>
-        <input
-          type="date"
-          id="date"
-          class="form-control"
-          value="2025-04-27"
-        />
-      </div>
+      trackerPage.classList.add('hidden');
+      signinPage.classList.remove('hidden');
 
-      <!-- Type -->
-      <div class="form-group">
-        <label for="type">Type</label>
-        <select id="type" class="form-control">
-          <option value="" disabled selected>Select type</option>
-          <option value="income">Income</option>
-          <option value="expense">Expense</option>
-        </select>
-      </div>
+      document.getElementById('password').value = '';
+    });
 
-      <!-- Category  ← NEW -->
-      <div class="form-group">
-        <label for="category">Category</label>
-        <select id="category" class="form-control">
-          <option value="" disabled selected>Select category</option>
-          <optgroup label="─── Income ───">
-            <option value="salary">Salary</option>
-            <option value="freelance">Freelance</option>
-            <option value="other-income">Other Income</option>
-          </optgroup>
-          <optgroup label="─── Expenses ───">
-            <option value="food">Food &amp; Groceries</option>
-            <option value="transport">Transport</option>
-            <option value="shopping">Shopping</option>
-            <option value="utilities">Utilities</option>
-            <option value="health">Health &amp; Beauty</option>
-            <option value="entertainment">Entertainment</option>
-            <option value="other">Other</option>
-          </optgroup>
-        </select>
-      </div>
+    // Enter key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !signinPage.classList.contains('hidden')) {
+        signinBtn.click();
+      }
+    });
+  </script>
 
-    </div>
-
-    <button class="btn-add" type="button">+ Add Transaction</button>
-  </div>
-
-  <!-- ░░░ TRANSACTION LIST ░░░ -->
-  <div class="transactions-card">
-
-    <div class="transactions-header">
-      <p class="section-label">Transaction History</p>
-      <div class="filter-tabs">
-        <button class="filter-tab active">All</button>
-        <button class="filter-tab">Income</button>
-        <button class="filter-tab">Expenses</button>
-      </div>
-    </div>
-
-    <div class="transactions-list">
-
-      <!-- ── April 2025 ── -->
-      <div class="txn-month-group">April 2025</div>
-
-      <!-- Income: Monthly Salary -->
-      <div class="txn txn--income">
-        <span class="txn__dot"></span>
-        <div class="txn__info">
-          <p class="txn__desc">Monthly Salary</p>
-          <div class="txn__meta">
-            <span class="txn__badge badge--salary">Salary</span>
-            <span class="txn__date">27 Apr 2025</span>
-          </div>
-        </div>
-        <div class="txn__right">
-          <p class="txn__amount"><span class="txn__sign">+</span>R 15,000.00</p>
-        </div>
-      </div>
-
-      <!-- Income: Freelance -->
-      <div class="txn txn--income">
-        <span class="txn__dot"></span>
-        <div class="txn__info">
-          <p class="txn__desc">Freelance Design Project</p>
-          <div class="txn__meta">
-            <span class="txn__badge badge--freelance">Freelance</span>
-            <span class="txn__date">25 Apr 2025</span>
-          </div>
-        </div>
-        <div class="txn__right">
-          <p class="txn__amount"><span class="txn__sign">+</span>R 6,500.00</p>
-        </div>
-      </div>
-
-      <!-- Expense: Woolworths -->
-      <div class="txn txn--expense">
-        <span class="txn__dot"></span>
-        <div class="txn__info">
-          <p class="txn__desc">Woolworths — Clothing</p>
-          <div class="txn__meta">
-            <span class="txn__badge badge--shopping">Shopping</span>
-            <span class="txn__date">24 Apr 2025</span>
-          </div>
-        </div>
-        <div class="txn__right">
-          <p class="txn__amount"><span class="txn__sign">−</span>R 2,450.00</p>
-        </div>
-      </div>
-
-      <!-- Expense: Electricity -->
-      <div class="txn txn--expense">
-        <span class="txn__dot"></span>
-        <div class="txn__info">
-          <p class="txn__desc">Electricity &amp; Water</p>
-          <div class="txn__meta">
-            <span class="txn__badge badge--utilities">Utilities</span>
-            <span class="txn__date">22 Apr 2025</span>
-          </div>
-        </div>
-        <div class="txn__right">
-          <p class="txn__amount"><span class="txn__sign">−</span>R 980.00</p>
-        </div>
-      </div>
-
-      <!-- Expense: Groceries -->
-      <div class="txn txn--expense">
-        <span class="txn__dot"></span>
-        <div class="txn__info">
-          <p class="txn__desc">Grocery Shopping</p>
-          <div class="txn__meta">
-            <span class="txn__badge badge--food">Food</span>
-            <span class="txn__date">20 Apr 2025</span>
-          </div>
-        </div>
-        <div class="txn__right">
-          <p class="txn__amount"><span class="txn__sign">−</span>R 1,320.00</p>
-        </div>
-      </div>
-
-      <!-- ── March 2025 ── -->
-      <div class="txn-month-group">March 2025</div>
-
-      <!-- Expense: Uber -->
-      <div class="txn txn--expense">
-        <span class="txn__dot"></span>
-        <div class="txn__info">
-          <p class="txn__desc">Uber &amp; Petrol</p>
-          <div class="txn__meta">
-            <span class="txn__badge badge--transport">Transport</span>
-            <span class="txn__date">31 Mar 2025</span>
-          </div>
-        </div>
-        <div class="txn__right">
-          <p class="txn__amount"><span class="txn__sign">−</span>R 620.00</p>
-        </div>
-      </div>
-
-      <!-- Expense: Netflix -->
-      <div class="txn txn--expense">
-        <span class="txn__dot"></span>
-        <div class="txn__info">
-          <p class="txn__desc">Netflix &amp; Spotify</p>
-          <div class="txn__meta">
-            <span class="txn__badge badge--other">Other</span>
-            <span class="txn__date">30 Mar 2025</span>
-          </div>
-        </div>
-        <div class="txn__right">
-          <p class="txn__amount"><span class="txn__sign">−</span>R 299.00</p>
-        </div>
-      </div>
-
-      <!-- Expense: Restaurant -->
-      <div class="txn txn--expense">
-        <span class="txn__dot"></span>
-        <div class="txn__info">
-          <p class="txn__desc">Restaurant — Dinner</p>
-          <div class="txn__meta">
-            <span class="txn__badge badge--food">Food</span>
-            <span class="txn__date">28 Mar 2025</span>
-          </div>
-        </div>
-        <div class="txn__right">
-          <p class="txn__amount"><span class="txn__sign">−</span>R 581.00</p>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- ░░░ FOOTER ░░░ -->
-  <footer class="footer">
-    Crafted with care &nbsp;·&nbsp; <span>Aurum</span> &nbsp;·&nbsp; 2026
-  </footer>
-  <script src="script.js"></script>
-
-</div>
 </body>
 </html>
