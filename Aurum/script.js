@@ -67,15 +67,32 @@
       if (!email)               return showErr("signinError","Please enter your email address.");
       if (!isValidEmail(email)) return showErr("signinError","Please enter a valid email address.");
       if (!pw)                  return showErr("signinError","Please enter your password.");
-      const user = getUsers()[email.toLowerCase()];
-      if (!user || user.password !== pw) {
-        showErr("signinError","Incorrect email or password.");
+      fetch("http://localhost:3000/login", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        email,
+        password: pw
+    })
+})
+.then(res => res.json())
+.then(data => {
+
+    if (data.user) {
+        saveSession(email, data.user.name);
+        loadTracker(data.user);
+    } else {
+        showErr("signinError", data.message || "Login failed");
         shakeCard("signinCard");
-        document.getElementById("siPassword").value = "";
-        return;
-      }
-      saveSession(email, user.name);
-      loadTracker(user);
+    }
+
+})
+.catch(err => {
+    console.log(err);
+    showErr("signinError", "Server error");
+});
     }
 
     document.getElementById("signinBtn").addEventListener("click", attemptSignIn);
