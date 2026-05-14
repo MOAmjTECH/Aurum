@@ -22,3 +22,24 @@ db.connect((err) => {
         console.log("Database connected");
     }
 });
+
+app.post("/register", async (req,res)=>{
+
+    const {name,email,password} = req.body;
+
+    const hashed = await bcrypt.hash(password,10);
+
+    const sql =
+      "INSERT INTO users(name,email,password) VALUES(?,?,?)";
+
+    db.query(sql,[name,email,hashed],(err,result)=>{
+
+        if(err){
+            return res.status(500).json(err);
+        }
+
+        res.json({ message:"Registered" });
+
+    });
+
+});
