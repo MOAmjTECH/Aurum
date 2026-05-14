@@ -374,6 +374,7 @@
           const txns = getTxns();
           txns.push({
             id: Date.now().toString(),
+            description: desc,
             desc,
             amount: amt,
             date,
