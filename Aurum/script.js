@@ -103,10 +103,24 @@
         shakeCard("registerCard");
         return showErr("registerError","An account with this email already exists.");
       }
-      users[email.toLowerCase()] = { name, email, password: pw };
-      saveUsers(users);
-      saveSession(email, name);
-      loadTracker({ name, email });
+    fetch("http://localhost:3000/register", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        name,
+        email,
+        password: pw
+    })
+})
+.then(res => res.json())
+.then(data => {
+    console.log(data);
+
+    saveSession(email, name);
+    loadTracker({ name, email });
+});
     }
 
     document.getElementById("registerBtn").addEventListener("click", attemptRegister);
