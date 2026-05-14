@@ -303,9 +303,27 @@
       if (!amt || amt<=0) return showErr("txnError","Please enter a valid amount.");
       if (!date)         return showErr("txnError","Please select a date.");
 
-      const txns = getTxns();
-      txns.push({ id: Date.now().toString(), desc, amount: amt, date, type, category: cat });
-      saveTxns(txns);
+   fetch("http://localhost:3000/transactions", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        user_email: session.email,
+        description: desc,
+        amount: amt,
+        date,
+        type,
+        category: cat
+    })
+})
+.then(() => {
+    renderAll();
+})
+.catch(err => {
+    console.log(err);
+    showErr("txnError", "Failed to save transaction");
+});
 
       // Clear form
       document.getElementById("txnDesc").value   = "";
