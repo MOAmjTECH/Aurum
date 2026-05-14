@@ -116,3 +116,21 @@ app.post("/transactions",(req,res)=>{
     });
 
 });
+
+
+app.get("/transactions/:email",(req,res)=>{
+
+    db.query(
+      "SELECT * FROM transactions WHERE user_email=?",
+      [req.params.email],
+      (err,result)=>{
+
+        if(err){
+            return res.status(500).json(err);
+        }
+
+        res.json(result);
+
+    });
+
+});
