@@ -135,6 +135,24 @@ app.get("/transactions/:email",(req,res)=>{
 
 });
 
+app.delete("/transactions/:id",(req,res)=>{
+
+    db.query(
+      "DELETE FROM transactions WHERE id=?",
+      [req.params.id],
+      (err,result)=>{
+
+        if(err){
+            return res.status(500).json(err);
+        }
+
+        res.json({ message:"Deleted" });
+
+      }
+    );
+
+});
+
 
 app.listen(3000,()=>{
     console.log("Running on port 3000");

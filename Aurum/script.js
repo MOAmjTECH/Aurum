@@ -175,7 +175,17 @@
       fetch(`http://localhost:3000/transactions/${user.email}`)
         .then(res => res.json())
         .then(txns => {
-          saveTxns(txns);
+          // Normalize data from server
+          const normalized = txns.map(t => ({
+            id: t.id,
+            description: t.description,
+            desc: t.description,
+            amount: parseFloat(t.amount),
+            date: t.date,
+            type: t.type,
+            category: t.category
+          }));
+          saveTxns(normalized);
           renderAll();
         })
         .catch(err => {
@@ -197,13 +207,14 @@
     let activeFilter = "all";
 
     function fmt(n) {
-      return "R " + Math.abs(n).toLocaleString("en-ZA", { minimumFractionDigits:2, maximumFractionDigits:2 });
+      const num = typeof n === 'string' ? parseFloat(n) : n;
+      return "R " + Math.abs(num).toLocaleString("en-ZA", { minimumFractionDigits:2, maximumFractionDigits:2 });
     }
 
     function renderAll() {
       const txns    = getTxns();
-      const income  = txns.filter(t => t.type === "income").reduce((s,t) => s + t.amount, 0);
-      const expense = txns.filter(t => t.type === "expense").reduce((s,t) => s + t.amount, 0);
+      const income  = txns.filter(t => t.type === "income").reduce((s,t) => s + parseFloat(t.amount || 0), 0);
+      const expense = txns.filter(t => t.type === "expense").reduce((s,t) => s + parseFloat(t.amount || 0), 0);
       const balance = income - expense;
       const pct     = income > 0 ? Math.min(100, Math.round((expense / income) * 100)) : 0;
 
@@ -235,7 +246,8 @@
     function renderCategories(txns) {
       const totals = {};
       txns.forEach(t => {
-        totals[t.category] = (totals[t.category] || 0) + t.amount;
+        const amt = parseFloat(t.amount || 0);
+        totals[t.category] = (totals[t.category] || 0) + amt;
       });
       const max = Math.max(...Object.values(totals), 1);
       const catList = document.getElementById("catList");
@@ -273,7 +285,7 @@
         <div class="txn txn--${t.type}">
           <span class="txn__dot"></span>
           <div class="txn__info">
-            <p class="txn__desc">${t.desc}</p>
+            <p class="txn__desc">${t.description || t.desc}</p>
             <div class="txn__meta">
               <span class="txn__badge badge--${t.category}">${t.category}</span>
               <span style="font-size:10px;color:var(--ash);">${formatDate(t.date)}</span>
@@ -288,15 +300,35 @@
       // Delete listeners
       list.querySelectorAll(".txn__delete").forEach(btn => {
         btn.addEventListener("click", () => {
-          const txns = getTxns().filter(t => t.id !== btn.dataset.id);
-          saveTxns(txns);
-          renderAll();
+          const txnId = parseInt(btn.dataset.id, 10);
+          fetch(`http://localhost:3000/transactions/${txnId}`, {
+            method: "DELETE"
+          })
+          .then(() => {
+            const txns = getTxns().filter(t => t.id !== txnId);
+            saveTxns(txns);
+            renderAll();
+          })
+          .catch(err => {
+            console.log("Delete error:", err);
+            showErr("txnError", "Failed to delete transaction");
+          });
         });
       });
     }
 
     function formatDate(d) {
-      const dt = new Date(d + "T00:00:00");
+      let dt;
+      if (typeof d === 'string') {
+        // Handle YYYY-MM-DD format from server
+        if (d.includes('T')) {
+          dt = new Date(d);
+        } else {
+          dt = new Date(d + "T00:00:00");
+        }
+      } else {
+        dt = new Date(d);
+      }
       return dt.toLocaleDateString("en-ZA", { day:"numeric", month:"short", year:"numeric" });
     }
 
