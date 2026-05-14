@@ -120,6 +120,7 @@
         shakeCard("registerCard");
         return showErr("registerError","An account with this email already exists.");
       }
+      
     fetch("http://localhost:3000/register", {
     method: "POST",
     headers: {
@@ -170,7 +171,18 @@
       document.getElementById("balanceMonth").textContent  = months[now.getMonth()] + " " + now.getFullYear();
       document.getElementById("currentMonth").textContent  = months[now.getMonth()];
 
-      renderAll();
+      // Fetch transactions from server
+      fetch(`http://localhost:3000/transactions/${user.email}`)
+        .then(res => res.json())
+        .then(txns => {
+          saveTxns(txns);
+          renderAll();
+        })
+        .catch(err => {
+          console.log("Failed to fetch transactions:", err);
+          renderAll(); // Render with localStorage data as fallback
+        });
+
       show("viewTracker");
     }
 
@@ -292,45 +304,62 @@
        ADD TRANSACTION
     ══════════════════════════════════════ */
     document.getElementById("addTxnBtn").addEventListener("click", () => {
+      const session = getSession();
+      if (!session) {
+        showErr("txnError", "Session expired. Please sign in again.");
+        show("viewSignin");
+        return;
+      }
+
       const desc  = document.getElementById("txnDesc").value.trim();
       const amt   = parseFloat(document.getElementById("txnAmount").value);
       const date  = document.getElementById("txnDate").value;
       const type  = document.getElementById("txnType").value;
       const cat   = document.getElementById("txnCategory").value;
+
       hideErr("txnError");
 
       if (!desc)         return showErr("txnError","Please enter a description.");
       if (!amt || amt<=0) return showErr("txnError","Please enter a valid amount.");
       if (!date)         return showErr("txnError","Please select a date.");
 
-   fetch("http://localhost:3000/transactions", {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-        user_email: session.email,
-        description: desc,
-        amount: amt,
-        date,
-        type,
-        category: cat
-    })
-})
-.then(() => {
-    renderAll();
-})
-.catch(err => {
-    console.log(err);
-    showErr("txnError", "Failed to save transaction");
-});
+      fetch("http://localhost:3000/transactions", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            user_email: session.email,
+            description: desc,
+            amount: amt,
+            date,
+            type,
+            category: cat
+        })
+      })
+      .then(() => {
+          // Save to localStorage as well
+          const txns = getTxns();
+          txns.push({
+            id: Date.now().toString(),
+            desc,
+            amount: amt,
+            date,
+            type,
+            category: cat
+          });
+          saveTxns(txns);
 
-      // Clear form
-      document.getElementById("txnDesc").value   = "";
-      document.getElementById("txnAmount").value = "";
-      document.getElementById("txnDate").valueAsDate = new Date();
-
-      renderAll();
+          // Clear form
+          document.getElementById("txnDesc").value   = "";
+          document.getElementById("txnAmount").value = "";
+          document.getElementById("txnDate").valueAsDate = new Date();
+          renderAll();
+      })
+      .catch(err => {
+          console.log(err);
+          showErr("txnError", "Failed to save transaction");
+      });
     });
 
     /* ══════════════════════════════════════
