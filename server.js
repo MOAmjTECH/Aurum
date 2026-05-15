@@ -1,3 +1,5 @@
+const { OAuth2Client } = require("google-auth-library");
+const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 require("dotenv").config();
 const express = require("express");
 const mysql = require("mysql2");
@@ -152,6 +154,27 @@ app.delete("/transactions/:id",(req,res)=>{
       }
     );
 
+});
+
+app.post("/auth/google", async (req, res) => {
+  try {
+    const { token } = req.body;
+    const ticket = await googleClient.verifyIdToken({
+      idToken: token,
+      audience: process.env.GOOGLE_CLIENT_ID
+    });
+    const { name, email } = ticket.getPayload();
+    db.query("SELECT * FROM users WHERE email=?", [email], (err, result) => {
+      if (err) return res.status(500).json({ message: "Database error" });
+      if (result.length === 0) {
+        db.query("INSERT INTO users(name,email,password) VALUES(?,?,?)",
+          [name, email, "GOOGLE_AUTH"]);
+      }
+      res.json({ user: { name, email } });
+    });
+  } catch (err) {
+    res.status(401).json({ message: "Invalid Google token" });
+  }
 });
 
 

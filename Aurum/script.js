@@ -1,6 +1,7 @@
   /* ══════════════════════════════════════
        STORAGE
     ══════════════════════════════════════ */
+    const API_BASE = "http://localhost:3000";
     const USERS_KEY   = "aurum_users";
     const SESSION_KEY = "aurum_session";
     const TXN_KEY     = "aurum_txns";
@@ -22,6 +23,20 @@
       } catch { return null; }
     }
     function clearSession() { localStorage.removeItem(SESSION_KEY); }
+    function handleGoogleLogin(response) {
+  fetch(`${API_BASE}/auth/google`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ token: response.credential })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.user) {
+      saveSession(data.user.email, data.user.name);
+      loadTracker(data.user);
+    }
+  });
+}
     const isValidEmail = e => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
 
     /* ══════════════════════════════════════
