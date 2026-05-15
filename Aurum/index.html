@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -44,9 +45,13 @@
         <button class="btn-primary" id="signinBtn">Sign In</button>
 
         <div class="divider"><span>or continue with</span></div>
-        <div class="social-grid">
-          <button class="btn-social">Google</button>
-        </div>
+      <div class="social-grid">
+  <div id="g_id_onload"
+    data-client_id="PASTE_YOUR_CLIENT_ID_HERE"
+    data-callback="handleGoogleLogin">
+  </div>
+  <div class="g_id_signin" data-type="standard"></div>
+</div>
       </div>
 
       <p class="footer-note">
